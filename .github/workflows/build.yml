@@ -21,11 +21,47 @@ jobs:
       - name: Setup Android SDK
         uses: actions/setup-android@v3
 
-      - name: Process Payload Data
+      - name: Process Payload Data & Update Project
+        env:
+          APP_NAME: ${{ github.event.client_payload.app_name }}
+          PACKAGE_NAME: ${{ github.event.client_payload.package_name }}
+          WEB_URL: ${{ github.event.client_payload.web_url }}
         run: |
-          echo "App Name: ${{ github.event.client_payload.app_name }}"
-          echo "Package Name: ${{ github.event.client_payload.package_name }}"
-          echo "Web URL: ${{ github.event.client_payload.web_url }}"
+          echo "Updating App Name: $APP_NAME"
+          echo "Updating Package Name: $PACKAGE_NAME"
+          echo "Updating Web URL: $WEB_URL"
+
+          # ১. strings.xml ফাইলে অ্যাপের নাম পরিবর্তন করার জন্য পাইথন স্ক্রিপ্ট
+          python3 -c "
+          import xml.etree.ElementTree as ET
+          import os
+
+          path = 'app/src/main/res/values/strings.xml'
+          if os.path.exists(path):
+              tree = ET.parse(path)
+              root = tree.getroot()
+              for elem in root.findall('string'):
+                  if elem.get('name') == 'app_name':
+                      elem.text = os.environ['APP_NAME']
+              tree.write(path, encoding='utf-8', xml_declaration=True)
+          "
+
+          # ২. অ্যান্ড্রয়েড প্রজেক্টের কোড বা কনফিগারেশনে Web URL বা Package Name বসানোর নিয়ম 
+          # (আপনার প্রজেক্টের MainActivity বা কনফিগার ফাইলে যেখানে ইউআরএল থাকে, সেটি এখানে পরিবর্তন করতে পারেন)
+          # যেমন: strings.xml-এ web_url নামে কোনো স্ট্রিং থাকলে তা আপডেট করা:
+          python3 -c "
+          import xml.etree.ElementTree as ET
+          import os
+
+          path = 'app/src/main/res/values/strings.xml'
+          if os.path.exists(path):
+              tree = ET.parse(path)
+              root = tree.getroot()
+              for elem in root.findall('string'):
+                  if elem.get('name') == 'web_url':
+                      elem.text = os.environ['WEB_URL']
+              tree.write(path, encoding='utf-8', xml_declaration=True)
+          "
 
       - name: Grant Execute Permission for Gradle
         run: chmod +x gradlew
@@ -36,5 +72,5 @@ jobs:
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.client_payload.app_name }}-Release-APK
+          name: Release-APK
           path: app/build/outputs/apk/release/*.apk
