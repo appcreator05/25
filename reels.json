@@ -1,1 +1,28 @@
-
+[
+  {
+    "id": "reel_001",
+    "title": "Welcome to VDOSky Reels! 🎬🔥 #welcome #trending",
+    "creator": "VDOSky Team",
+    "creatorHandle": "@vdosky",
+    "creatorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    "likes": 120,
+    "sound": "Original Audio - VDOSky",
+    "category": "Trending",
+    "createdAt": 1710000000000,
+    "comments": []
+  },
+  {
+    "id": "reel_002",
+    "title": "Avatar The Way of Water: Visual Perfection 🌊🐋 #avatar #cinema",
+    "creator": "CineVisuals",
+    "creatorHandle": "@cinevisuals",
+    "creatorAvatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4",
+    "likes": 85,
+    "sound": "Avatar Ambient Soundscapes",
+    "category": "Sci-Fi",
+    "createdAt": 1710000000000,
+    "comments": []
+  }
+]
